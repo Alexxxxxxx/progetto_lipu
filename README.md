@@ -1,2 +1,1 @@
-# progetto_lipu
-Progetto LIPU
+# Progetto LIPU
