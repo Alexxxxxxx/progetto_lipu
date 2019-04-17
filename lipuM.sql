@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cause` (
-  `id_causa` int(11) NOT NULL DEFAULT '0',
+  `id_causa` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `causa` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -59,7 +59,7 @@ INSERT INTO `cause` (`id_causa`, `causa`) VALUES
 --
 
 CREATE TABLE `chirurgia` (
-  `id_chirurgia` int(11) NOT NULL,
+  `id_chirurgia` int(11) NOT NULL AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -8010,30 +8010,11 @@ INSERT INTO `comuni` (`id_comune`, `comune`, `cod_catastale`, `id_provincia`) VA
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `comuni_provincie_regioni`
---
-
-CREATE TABLE `comuni_provincie_regioni` (
-  `ID` int(11) NOT NULL DEFAULT '0',
-  `id_regione` varchar(2) DEFAULT NULL,
-  `id_provincia` varchar(3) DEFAULT NULL,
-  `id_comune` varchar(6) DEFAULT NULL,
-  `comune` varchar(50) DEFAULT NULL,
-  `regione` varchar(25) DEFAULT NULL,
-  `provincia` varchar(35) DEFAULT NULL,
-  `sigla_provincia` varchar(5) DEFAULT NULL,
-  `id_comune2` double DEFAULT NULL,
-  `cod_catast_comune` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `consegnante`
 --
 
 CREATE TABLE `consegnante` (
-  `id_consegnante` int(11) NOT NULL DEFAULT '0',
+  `id_consegnante` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `pf_ente` varchar(1) DEFAULT NULL,
   `ragione_sociale` varchar(25) DEFAULT NULL,
   `cognome` varchar(25) DEFAULT NULL,
@@ -8203,7 +8184,7 @@ INSERT INTO `descrizioni` (`categoria`, `descrizione`) VALUES
 --
 
 CREATE TABLE `diagnosi` (
-  `id_diagnosi` int(11) NOT NULL DEFAULT '0',
+  `id_diagnosi` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `id_ricovero` int(11) NOT NULL,
   `veterinario` varchar(30) DEFAULT NULL,
   `data_visita` date DEFAULT NULL,
@@ -8227,7 +8208,7 @@ CREATE TABLE `diagnosi` (
 --
 
 CREATE TABLE `donazioni` (
-  `id_donazione` int(11) NOT NULL DEFAULT '0',
+  `id_donazione` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `id_donatore` int(11) DEFAULT NULL,
   `donazione` double(10,2) DEFAULT NULL,
   `causale` varchar(15) DEFAULT NULL,
@@ -8241,7 +8222,7 @@ CREATE TABLE `donazioni` (
 --
 
 CREATE TABLE `esame` (
-  `id_esame` int(11) NOT NULL,
+  `id_esame` int(11) NOT NULL AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `esame` int(11) DEFAULT NULL,
@@ -8256,7 +8237,7 @@ CREATE TABLE `esame` (
 --
 
 CREATE TABLE `frattura` (
-  `id_frattura` int(11) NOT NULL DEFAULT '0',
+  `id_frattura` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `id_diagnosi` int(11) DEFAULT NULL,
   `distretto` varchar(20) DEFAULT NULL,
   `tipologia` varchar(20) DEFAULT NULL,
@@ -8271,7 +8252,7 @@ CREATE TABLE `frattura` (
 --
 
 CREATE TABLE `lesione` (
-  `id_lesione` int(11) NOT NULL DEFAULT '0',
+  `id_lesione` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `locazione` varchar(10) DEFAULT NULL,
   `id_diagnosi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -8447,7 +8428,7 @@ INSERT INTO `regioni` (`id_regione`, `regione`) VALUES
 --
 
 CREATE TABLE `ricovero` (
-  `id_ricovero` int(11) NOT NULL,
+  `id_ricovero` int(11) NOT NULL AUTO_INCREMENT,
   `id_causa` int(11) DEFAULT NULL,
   `altra_causa` int(11) DEFAULT NULL,
   `triage` varchar(10) DEFAULT NULL,
@@ -8478,7 +8459,7 @@ CREATE TABLE `ricovero` (
 --
 
 CREATE TABLE `specie` (
-  `id_specie` int(11) NOT NULL,
+  `id_specie` int(11) NOT NULL AUTO_INCREMENT,
   `nome_comune` varchar(255) DEFAULT NULL,
   `nome_scientifico` varchar(255) DEFAULT NULL,
   `spec` int(11) DEFAULT NULL
@@ -8986,7 +8967,7 @@ INSERT INTO `specie` (`id_specie`, `nome_comune`, `nome_scientifico`, `spec`) VA
 --
 
 CREATE TABLE `terapia` (
-  `id_terapia` int(11) NOT NULL,
+  `id_terapia` int(11) NOT NULL AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `farmaci` varchar(255) DEFAULT NULL,
@@ -9001,7 +8982,7 @@ CREATE TABLE `terapia` (
 --
 
 CREATE TABLE `tipi_esame` (
-  `id_tipoesame` int(11) NOT NULL DEFAULT '0',
+  `id_tipoesame` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
   `tipo_esame` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
