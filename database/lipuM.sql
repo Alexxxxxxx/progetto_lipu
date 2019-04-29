@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cause` (
-  `id_causa` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_causa` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `causa` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -59,7 +59,7 @@ INSERT INTO `cause` (`id_causa`, `causa`) VALUES
 --
 
 CREATE TABLE `chirurgia` (
-  `id_chirurgia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_chirurgia` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE `chirurgia` (
 --
 
 CREATE TABLE `comuni` (
-  `id_comune` varchar(6) NOT NULL DEFAULT '',
+  `id_comune` varchar(6) NOT NULL PRIMARY KEY DEFAULT '',
   `comune` varchar(255) DEFAULT NULL,
   `cod_catastale` varchar(5) DEFAULT NULL,
   `id_provincia` varchar(3) DEFAULT NULL
@@ -8014,7 +8014,7 @@ INSERT INTO `comuni` (`id_comune`, `comune`, `cod_catastale`, `id_provincia`) VA
 --
 
 CREATE TABLE `consegnante` (
-  `id_consegnante` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_consegnante` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `pf_ente` varchar(1) DEFAULT NULL,
   `ragione_sociale` varchar(25) DEFAULT NULL,
   `cognome` varchar(25) DEFAULT NULL,
@@ -8056,8 +8056,9 @@ INSERT INTO `consegnante` (`id_consegnante`, `pf_ente`, `ragione_sociale`, `cogn
 --
 
 CREATE TABLE `descrizioni` (
-  `categoria` varchar(20) NOT NULL,
-  `descrizione` varchar(25) NOT NULL
+  `categoria` varchar(20) NOT NULL PRIMARY KEY,
+  `descrizione` varchar(25) NOT NULL PRIMARY KEY,
+  CONSTRAINT categoria_descrizione PRIMARY KEY (categoria, descrizione)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -8184,7 +8185,7 @@ INSERT INTO `descrizioni` (`categoria`, `descrizione`) VALUES
 --
 
 CREATE TABLE `diagnosi` (
-  `id_diagnosi` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_diagnosi` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_ricovero` int(11) NOT NULL,
   `veterinario` varchar(30) DEFAULT NULL,
   `data_visita` date DEFAULT NULL,
@@ -8208,7 +8209,7 @@ CREATE TABLE `diagnosi` (
 --
 
 CREATE TABLE `donazioni` (
-  `id_donazione` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_donazione` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_donatore` int(11) DEFAULT NULL,
   `donazione` double(10,2) DEFAULT NULL,
   `causale` varchar(15) DEFAULT NULL,
@@ -8222,7 +8223,7 @@ CREATE TABLE `donazioni` (
 --
 
 CREATE TABLE `esame` (
-  `id_esame` int(11) NOT NULL AUTO_INCREMENT,
+  `id_esame` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `esame` int(11) DEFAULT NULL,
@@ -8237,7 +8238,7 @@ CREATE TABLE `esame` (
 --
 
 CREATE TABLE `frattura` (
-  `id_frattura` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_frattura` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_diagnosi` int(11) DEFAULT NULL,
   `distretto` varchar(20) DEFAULT NULL,
   `tipologia` varchar(20) DEFAULT NULL,
@@ -8252,7 +8253,7 @@ CREATE TABLE `frattura` (
 --
 
 CREATE TABLE `lesione` (
-  `id_lesione` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_lesione` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `locazione` varchar(10) DEFAULT NULL,
   `id_diagnosi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -8264,7 +8265,7 @@ CREATE TABLE `lesione` (
 --
 
 CREATE TABLE `provincie` (
-  `id_provincia` varchar(3) NOT NULL DEFAULT '',
+  `id_provincia` varchar(3) NOT NULL PRIMARY KEY,
   `provincia` varchar(40) DEFAULT NULL,
   `sigla` varchar(2) DEFAULT NULL,
   `id_regione` varchar(2) DEFAULT NULL
@@ -8391,7 +8392,7 @@ INSERT INTO `provincie` (`id_provincia`, `provincia`, `sigla`, `id_regione`) VAL
 --
 
 CREATE TABLE `regioni` (
-  `id_regione` varchar(2) NOT NULL DEFAULT '',
+  `id_regione` varchar(2) NOT NULL PRIMARY KEY,
   `regione` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -8428,7 +8429,7 @@ INSERT INTO `regioni` (`id_regione`, `regione`) VALUES
 --
 
 CREATE TABLE `ricovero` (
-  `id_ricovero` int(11) NOT NULL AUTO_INCREMENT,
+  `id_ricovero` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_causa` int(11) DEFAULT NULL,
   `altra_causa` int(11) DEFAULT NULL,
   `triage` varchar(10) DEFAULT NULL,
@@ -8459,7 +8460,7 @@ CREATE TABLE `ricovero` (
 --
 
 CREATE TABLE `specie` (
-  `id_specie` int(11) NOT NULL AUTO_INCREMENT,
+  `id_specie` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nome_comune` varchar(255) DEFAULT NULL,
   `nome_scientifico` varchar(255) DEFAULT NULL,
   `spec` int(11) DEFAULT NULL
@@ -8967,7 +8968,7 @@ INSERT INTO `specie` (`id_specie`, `nome_comune`, `nome_scientifico`, `spec`) VA
 --
 
 CREATE TABLE `terapia` (
-  `id_terapia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_terapia` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `data` date DEFAULT NULL,
   `veterinario` varchar(255) DEFAULT NULL,
   `farmaci` varchar(255) DEFAULT NULL,
@@ -8982,7 +8983,7 @@ CREATE TABLE `terapia` (
 --
 
 CREATE TABLE `tipi_esame` (
-  `id_tipoesame` int(11) NOT NULL DEFAULT '0' AUTO_INCREMENT,
+  `id_tipoesame` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `tipo_esame` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -9012,64 +9013,40 @@ INSERT INTO `tipi_esame` (`id_tipoesame`, `tipo_esame`) VALUES
 --
 
 --
--- Indici per le tabelle `cause`
---
-ALTER TABLE `cause`
-  ADD PRIMARY KEY (`id_causa`);
-
---
 -- Indici per le tabelle `chirurgia`
 --
 ALTER TABLE `chirurgia`
-  ADD PRIMARY KEY (`id_chirurgia`),
   ADD KEY `ricoverochirurgia` (`id_ricovero`);
 
 --
 -- Indici per le tabelle `comuni`
 --
 ALTER TABLE `comuni`
-  ADD PRIMARY KEY (`id_comune`),
   ADD KEY `provinciecomuni` (`id_provincia`);
-
---
--- Indici per le tabelle `comuni_provincie_regioni`
---
-ALTER TABLE `comuni_provincie_regioni`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indici per le tabelle `consegnante`
 --
 ALTER TABLE `consegnante`
-  ADD PRIMARY KEY (`id_consegnante`),
   ADD KEY `provinciaconsegnante` (`provincia`),
   ADD KEY `comuneconsegnante` (`citta`);
-
---
--- Indici per le tabelle `descrizioni`
---
-ALTER TABLE `descrizioni`
-  ADD PRIMARY KEY (`categoria`,`descrizione`);
 
 --
 -- Indici per le tabelle `diagnosi`
 --
 ALTER TABLE `diagnosi`
-  ADD PRIMARY KEY (`id_diagnosi`),
   ADD KEY `ricoverodiagnosi` (`id_ricovero`);
 
 --
 -- Indici per le tabelle `donazioni`
 --
 ALTER TABLE `donazioni`
-  ADD PRIMARY KEY (`id_donazione`),
   ADD KEY `consegnantedonatore` (`id_donatore`);
 
 --
 -- Indici per le tabelle `esame`
 --
 ALTER TABLE `esame`
-  ADD PRIMARY KEY (`id_esame`),
   ADD KEY `ricoveroesame` (`id_ricovero`),
   ADD KEY `tipiesameesame` (`esame`);
 
@@ -9077,34 +9054,24 @@ ALTER TABLE `esame`
 -- Indici per le tabelle `frattura`
 --
 ALTER TABLE `frattura`
-  ADD PRIMARY KEY (`id_frattura`),
   ADD KEY `diagnosifrattura` (`id_diagnosi`);
 
 --
 -- Indici per le tabelle `lesione`
 --
 ALTER TABLE `lesione`
-  ADD PRIMARY KEY (`id_lesione`),
   ADD KEY `diagnosilesione` (`id_diagnosi`);
 
 --
 -- Indici per le tabelle `provincie`
 --
 ALTER TABLE `provincie`
-  ADD PRIMARY KEY (`id_provincia`),
   ADD KEY `regioniprovincie` (`id_regione`);
-
---
--- Indici per le tabelle `regioni`
---
-ALTER TABLE `regioni`
-  ADD PRIMARY KEY (`id_regione`);
 
 --
 -- Indici per le tabelle `ricovero`
 --
 ALTER TABLE `ricovero`
-  ADD PRIMARY KEY (`id_ricovero`),
   ADD KEY `consegnantericovero` (`id_consegnante`),
   ADD KEY `causericovero` (`id_causa`),
   ADD KEY `altracausaricovero` (`altra_causa`),
@@ -9114,23 +9081,10 @@ ALTER TABLE `ricovero`
   ADD KEY `regioniricovero` (`regione_ritrov`);
 
 --
--- Indici per le tabelle `specie`
---
-ALTER TABLE `specie`
-  ADD PRIMARY KEY (`id_specie`);
-
---
 -- Indici per le tabelle `terapia`
 --
 ALTER TABLE `terapia`
-  ADD PRIMARY KEY (`id_terapia`),
   ADD KEY `ricoveroterapia` (`id_ricovero`);
-
---
--- Indici per le tabelle `tipi_esame`
---
-ALTER TABLE `tipi_esame`
-  ADD PRIMARY KEY (`id_tipoesame`);
 
 --
 -- Limiti per le tabelle scaricate
