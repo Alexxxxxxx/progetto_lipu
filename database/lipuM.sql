@@ -8056,8 +8056,8 @@ INSERT INTO `consegnante` (`id_consegnante`, `pf_ente`, `ragione_sociale`, `cogn
 --
 
 CREATE TABLE `descrizioni` (
-  `categoria` varchar(20) NOT NULL PRIMARY KEY,
-  `descrizione` varchar(25) NOT NULL PRIMARY KEY,
+  `categoria` varchar(20) NOT NULL,
+  `descrizione` varchar(25) NOT NULL,
   CONSTRAINT categoria_descrizione PRIMARY KEY (categoria, descrizione)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
