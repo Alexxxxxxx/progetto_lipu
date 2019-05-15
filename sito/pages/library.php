@@ -189,21 +189,32 @@ function getHeaderHTML($title,$subtitle,$dblipu){ ?>
                         <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
+						
+						<li>
+                            <a href="#"><i class="fa fa-id-card-o fa-flip-horizontal"></i> Scheda Ammissione<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+								<li>
+									<a href="nuova_scheda.php"><i class="fa fa-plus fa-fw"></i> Nuova Scheda</a>
+                                </li>
+								<li>
+                                    <a href="apri_scheda.php"><i class="fa fa-folder-open fa-fw"></i> Apri Scheda</a>
+                                </li>
+							</ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+					
+						<li>
+                            <a href="cartella_clinica.php"><i class="fa fa-heartbeat fa-fw"></i> Cartella Clinica</a>
+                        </li>
   
                         <li>
-                            <a href="#"><i class="fa fa-database fa-flip-horizontal"></i> DB LIPU<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-database fa-flip-horizontal"></i> Database<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li>
-                                    <a href="cartella_clinica.php">Cartella Clinica</a>
-                                </li>
 								<li>
                                     <a href="specie.php">Specie</a>
                                 </li>
 								<li>
-                                    <a href="consegnante.php">Consegnanti</a>
-                                </li>
-								<li>
-                                    <a href="docenti.php">Docenti</a>
+                                    <a href="consegnanti.php">Consegnanti</a>
                                 </li>
 								<li>
                                     <a href="collaboratori.php">Collaboratori</a>

@@ -10,16 +10,33 @@
 
 	$connection = new mysqli($db_path,$db_user,$db_pass,$dblipu);
 	if(!$_POST){
-		getHeaderHTML("ITIS G.Galilei","Cartella Clinica",$dblipu);
+		getHeaderHTML("LIPU","Cartella Clinica",$dblipu);
 	?>
 	
 	<script>
 		function changeTab(tab_index) {
-			$('#tab-header button').removeClass("active");
-			$("#" + tab_index + "_a").addClass("active");
+			<?php
+				//INSERIRE SALVATAGGIO FORM CORRENTE
+			?>
+			if(tab_index == 1) {
+				$('#tab-header button').removeClass("active");
+				$('#tab-header button').removeClass("active-last");
+				$("#" + tab_index + "_a").addClass("active-first");
+			}
+			else if(tab_index == 5) {
+				$('#tab-header button').removeClass("active");
+				$('#tab-header button').removeClass("active-first");
+				$("#" + tab_index + "_a").addClass("active-last");
+			}
+			else {
+				$('#tab-header button').removeClass("active");
+				$('#tab-header button').removeClass("active-last");
+				$('#tab-header button').removeClass("active-first");
+				$("#" + tab_index + "_a").addClass("active");
+			}
 			
 			$('.tab-form').removeClass("tab-form-active");
-			$("#" + tab_index + "").addClass("tab-form-active");
+			$("#" + tab_index).addClass("tab-form-active");
 		}
 	</script>
 
@@ -39,7 +56,7 @@
                     	<?php if(!$_GET){ ?>
                         <div id="tab-section">
 							<div id="tab-header">
-								<button class="tab active" id="1_a" onclick="changeTab(1)">
+								<button class="tab active first" id="1_a" onclick="changeTab(1)">
 									<h3>Riepilogo</h3>
 								</button>
 								<button class="tab" id="2_a" onclick="changeTab(2)">
@@ -51,7 +68,7 @@
 								<button class="tab" id="4_a" onclick="changeTab(4)">
 									<h3>Terapie</h3>
 								</button>
-								<button class="tab" id="5_a" onclick="changeTab(5)">
+								<button class="tab last" id="5_a" onclick="changeTab(5)">
 									<h3>Varie</h3>
 								</button>
 							</div>
@@ -66,6 +83,7 @@
 												$query = "SELECT nome_comune FROM specie;";
 												$result = querySql($connection,$query);
 												if($result!=NULL){
+													echo "<option value=''>--Seleziona--</option>";
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
 													}
@@ -77,13 +95,35 @@
 										<label>Data rinvenimento</label>
 										<input name="data_rinvenimento" type="date" class="form-control">
 										<label>Età</label>
-										<input name="eta" type="text" class="form-control" maxLength="3">
+										<select name="eta" type="text" class="form-control">
+											<?php
+												$query = "SELECT descrizione FROM descrizioni WHERE categoria='eta';";
+												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
+												if($result!=NULL){
+													while($row = $result->fetch_array()){
+														echo "<option value=''>$row[0]</option>";
+													}
+												}
+											?>
+										</select>
 										<label>Causa ricovero</label>
 										<input name="causa" type="text" class="form-control" maxLength="50">
 										<label>Altra causa</label>
 										<input name="altro" type="text" class="form-control" maxLength="50">
 										<label>Triage</label>
-										<input name="triage" type="text" class="form-control" maxLength="50">
+										<select name="triage" type="text" class="form-control">
+											<?php
+												$query = "SELECT triage FROM diagnosi;";
+												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
+												if($result!=NULL){
+													while($row = $result->fetch_array()){
+														echo "<option value=''>$row[0]</option>";
+													}
+												}
+											?>
+										</select>
 									</div>
 								</form>
 								<!-- FINE FORM RIEPILOGO -->
@@ -93,34 +133,13 @@
 										<label>Diagnosi</label>
 										<input name="diagnosi" type="text" class="form-control">
 										<label>Veterinario</label>
-										<select name="veterinario" type="text" class="form-control">
-											<?php
-												$query = "SELECT veterinario FROM diagnosi;";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Triage</label>
-										<select name="triage" type="text" class="form-control">
-											<?php
-												$query = "SELECT triage FROM diagnosi;";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Lesione 1</label>
+										<input name="veterinario" type="text" class="form-control">
+										<label>Lesione</label>
 										<select name="lesione1" type="text" class="form-control">
 											<?php
 												$query = "SELECT descrizione FROM descrizioni WHERE categoria='lesione';";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -128,47 +147,12 @@
 												}
 											?>
 										</select>
-										<label>Lesione 2</label>
-										<select name="lesione2" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='lesione';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Lesione 3</label>
-										<select name="lesione3" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='lesione';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Lesione 4</label>
-										<select name="lesione4" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='lesione';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Distretto 1</label>
+										<label>Distretto</label>
 										<select name="distretto1" type="text" class="form-control">
 											<?php
 												$query = "SELECT descrizione FROM descrizioni WHERE categoria='distretto';";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -176,47 +160,12 @@
 												}
 											?>
 										</select>
-										<label>Distretto 2</label>
-										<select name="distretto2" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='distretto';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Distretto 3</label>
-										<select name="distretto3" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='distretto';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Distretto 4</label>
-										<select name="distretto4" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='distretto';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Tipo Frattura 1</label>
+										<label>Tipo Frattura</label>
 										<select name="frattura1" type="text" class="form-control">
 											<?php
 												$query = "SELECT descrizione FROM descrizioni WHERE categoria='frattura';";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -224,83 +173,12 @@
 												}
 											?>
 										</select>
-										<label>Tipo Frattura 2</label>
-										<select name="frattura2" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='frattura';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Tipo Frattura 3</label>
-										<select name="frattura3" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='frattura';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Tipo Frattura 4</label>
-										<select name="frattura4" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='frattura';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Locazione 1</label>
-										<select name="localizzazione1" type="text" class="form-control">
+										<label>Locazione</label>
+										<select name="locazione1" type="text" class="form-control">
 											<?php
 												$query = "SELECT descrizione FROM descrizioni WHERE categoria='locazione';";
 												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Locazione 2</label>
-										<select name="localizzazione2" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='locazione';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Locazione 3</label>
-										<select name="localizzazione3" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='locazione';";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
-										</select>
-										<label>Locazione 4</label>
-										<select name="localizzazione4" type="text" class="form-control">
-											<?php
-												$query = "SELECT descrizione FROM descrizioni WHERE categoria='locazione';";
-												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -314,11 +192,14 @@
 								<!-- INIZIO FORM ESAMI -->
 								<form id="3" class="tab-form" action="cartella_clinica.php" method="GET">
 									<div class="form-group">
-										<label>Esami</label>
-										<select name="nome_comune" type="text" class="form-control">
+										<label>Data esame</label>
+										<input name="data_esame1" type="date" class="form-control">
+										<label>Esame</label>
+										<select name="esame1" type="text" class="form-control">
 											<?php
-												$query = "SELECT nome_scientifico FROM specie;";
+												$query = "SELECT descrizione FROM descrizioni WHERE categoria='esame';";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -326,24 +207,30 @@
 												}
 											?>
 										</select>
+										<label>Veterinario</label>
+										<input name="veterinario" type="text" class="form-control">
+										<label>Note</label>
+										<input name="note1" type="text" class="form-control">
 									</div>
 								</form>
 								<!-- FINE FORM ESAMI -->
 								<!-- INIZIO FORM TERAPIE -->
 								<form id="4" class="tab-form" action="cartella_clinica.php" method="GET">
 									<div class="form-group">
-										<label>Terapie</label>
-										<select name="nome_comune" type="text" class="form-control">
-											<?php
-												$query = "SELECT nome_scientifico FROM specie;";
-												$result = querySql($connection,$query);
-												if($result!=NULL){
-													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
-													}
-												}
-											?>
+										<label>Data terapia</label>
+										<input name="data_terapia1" type="date" class="form-control">
+										<label>Veterinario</label>
+										<input name="veterinario" type="text" class="form-control">
+										<label>Farmaci</label>
+										<input name="farmaci1" type="text" class="form-control">
+										<label>Altra terapia</label>
+										<select name="altra_terapia1" type="text" class="form-control">
+											<option value="">--Seleziona--</option>
+											<option value="">Chirurgica</option>
+											<option value="">Non cruenta</option>
 										</select>
+										<label>Note</label>
+										<input name="note1" type="text" class="form-control">
 									</div>
 								</form>
 								<!-- FINE FORM TERAPIE -->
@@ -357,6 +244,7 @@
 											<?php
 												$query = "SELECT sensorio_centrale FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -369,6 +257,7 @@
 											<?php
 												$query = "SELECT grasso FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -381,6 +270,7 @@
 											<?php
 												$query = "SELECT muscolatura FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -393,6 +283,7 @@
 											<?php
 												$query = "SELECT piumaggio FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -409,6 +300,7 @@
 											<?php
 												$query = "SELECT disidratazione FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -421,6 +313,7 @@
 											<?php
 												$query = "SELECT mucose FROM diagnosi;";
 												$result = querySql($connection,$query);
+												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
 														echo "<option value=''>$row[0]</option>";
@@ -445,6 +338,7 @@
 							echo "<a href='cartella_clinica.php' class='btn btn-warning'>Cancel</a>";
 						?>
 						<input name='btn' value="Save" type='submit' class='btn btn-success'>
+						<a id="pdf-button" type="button" class="btn btn-success download" href="<?php echo "esporta_pdf.php" ?>" target="_blank">Esporta PDF</a>
 					</div>
 				</center>
 			</div>

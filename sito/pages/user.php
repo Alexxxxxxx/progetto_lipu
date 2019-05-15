@@ -60,8 +60,10 @@
 												echo "<td>";
 												if($row["is_admin"]==1)
 													echo "ADMIN";
+												else if($row["is_admin"]==0)
+													echo "VETERINARIO";	
 												else
-													echo "USER";	
+													echo "USER";
 												echo "</td>";
 										?>
 											</tr>
@@ -79,7 +81,7 @@
 								<form action="user.php" method="POST">
                                     <div class="form-group">
                                     	<label>User</label>
-										<input name="user" type="text" size="5" class="form-control" onkeyup="limitText(this,10);">
+										<input name="user" type="text" size="5" class="form-control" onkeyup="limitText(this,20);">
                                     </div>
                                     <div class="form-group">
                                     	<label>Password</label>
@@ -88,8 +90,9 @@
                                     <div class="form-group">
                                     	<label>Type</label>
 										<select name="is_admin">
-												<option value="0">COMPUTER</option>
-												<option value="1">ADMIN</option>
+											<option value="-1">USER</option>
+											<option value="0">VETERINARIO</option>
+											<option value="1">ADMIN</option>
 										</select>
                                     </div>
                                     <div class="form-group">

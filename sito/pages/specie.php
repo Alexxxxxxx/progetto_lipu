@@ -27,6 +27,8 @@
 		$spec = mysqli_real_escape_string($connection, $_GET['spec']);
 	}
 	?>
+	
+	<script type="text/javascript" src="ajax.js"></script>
 
 	<div id="page-wrapper">
         <div class="row">
@@ -123,50 +125,49 @@
                             	</button>
 								<?php endif; ?>
                         	</div>
-                            <div class="dataTable_wrapper">
-	                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-	                                <thead>
-	                                    <tr>
-	                                        <th>ID Specie</th>
-											<th>Nome Comune</th>
-											<th>Nome Scientifico</th>
-											<th>Spec</th>
-											<?php if($_SESSION['is_admin']) : ?>
-											<th>Modifica</th>
-											<?php endif; ?>
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                <?php
-	                                	//	Elenco specie
-	                                   	$query = "SELECT * 
-										            FROM specie 
-													ORDER BY nome_comune;";
-										$result = querySql($connection,$query);
-										$j = 0;
-										if($result!=NULL){
-											if($result!=NULL)
-											while($row = $result->fetch_array()){
-												$j++;
-												echo "<tr>";
-												echo "<td><input type=\"checkbox\" onClick=\"unAll()\" name=\"elem[]\" value=\"$row[0]\" id=\"$row[0]\"> $row[0]</td>";
-												echo "<td>$row[1]</td>";
-												echo "<td>$row[2]</td>";
-												echo "<td>$row[3]</td>";
-												if($_SESSION['is_admin'])
-													echo "<td><a href=\"modifica_specie.php?id=$row[0]\"><img src=\"".$pathImgPg.'edit.png'."\" title=\"Modifica\" align=\"center\" width=\"20\"></a></td>";
-												//Link alla pagina stessa con argomento id
-												//echo "<td><a href=\"modifica_specie.php?id=$row[0]\">APRI</a></td>";
-												echo "</tr>";
-												}
-											}
-									?>
-									</tbody>
-								</table>
-							</div>
 						</form>
 						
-						<?php } 
+						<div class="dataTable_wrapper">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>ID Specie</th>
+										<th>Nome Comune</th>
+										<th>Nome Scientifico</th>
+										<th>Spec</th>
+										<?php if($_SESSION['is_admin']) : ?>
+										<th>Modifica</th>
+										<?php endif; ?>
+									</tr>
+								</thead>
+								<tbody>
+								<?php
+									//	Elenco specie
+									$query = "SELECT * 
+												FROM specie 
+												ORDER BY nome_comune;";
+									$result = querySql($connection,$query);
+									$j = 0;
+									if($result!=NULL){
+										if($result!=NULL)
+										while($row = $result->fetch_array()){
+											$j++;
+											echo "<tr>";
+											echo "<td><input type=\"checkbox\" onClick=\"unAll()\" name=\"elem[]\" value=\"$row[0]\" id=\"$row[0]\"> $row[0]</td>";
+											echo "<td>$row[1]</td>";
+											echo "<td>$row[2]</td>";
+											echo "<td>$row[3]</td>";
+											if($_SESSION['is_admin'])
+												echo "<td><a href=\"modifica_specie.php?id=$row[0]\"><img src=\"".$pathImgPg.'edit.png'."\" title=\"Modifica\" align=\"center\" width=\"20\"></a></td>";
+											echo "</tr>";
+											}
+										}
+								?>
+								</tbody>
+							</table>
+						</div>
+				
+				<?php } 
 							
 	getFooterHTML();
 	}
