@@ -19,22 +19,9 @@
 			<?php
 				//INSERIRE SALVATAGGIO FORM CORRENTE
 			?>
-			if(tab_index == 1) {
-				$('#tab-header button').removeClass("active");
-				$('#tab-header button').removeClass("active-last");
-				$("#" + tab_index + "_a").addClass("active-first");
-			}
-			else if(tab_index == 4) {
-				$('#tab-header button').removeClass("active");
-				$('#tab-header button').removeClass("active-first");
-				$("#" + tab_index + "_a").addClass("active-last");
-			}
-			else {
-				$('#tab-header button').removeClass("active");
-				$('#tab-header button').removeClass("active-last");
-				$('#tab-header button').removeClass("active-first");
-				$("#" + tab_index + "_a").addClass("active");
-			}
+			
+			$('#tab-header button').removeClass("active");
+			$("#" + tab_index + "_a").addClass("active");
 			
 			$('.tab-form').removeClass("tab-form-active");
 			$("#" + tab_index).addClass("tab-form-active");
@@ -70,7 +57,7 @@
 					<?php if(!$_GET){ ?>
                         <div id="tab-section">
 							<div id="tab-header">
-								<button class="tab active first" id="1_a" onclick="changeTab(1)">
+								<button class="tab active" id="1_a" onclick="changeTab(1)">
 									<h3>Ritrovamento</h3>
 								</button>
 								<button class="tab" id="2_a" onclick="changeTab(2)">
@@ -79,14 +66,20 @@
 								<button class="tab" id="3_a" onclick="changeTab(3)">
 									<h3>Esito</h3>
 								</button>
-								<button class="tab last" id="4_a" onclick="changeTab(4)">
+								<button class="tab" id="4_a" onclick="changeTab(4)">
 									<h3>Consegnante</h3>
 								</button>
 								<div align="right">
 									<a title="Stampa" href="" class='btn btn-success stampa'><i class="fa fa-print fa-fw"></i></a>
-									<a <?php echo "href='cartella_clinica.php?id_ricovero=$id_ricovero'"; ?> class='btn btn-success cartella'>
-										<i class="fa fa-folder-open fa-fw"></i>
+									<?php
+										if($_SESSION['is_admin'] != -1):
+									?>
+									<a title="Apri Cartella Clinica" <?php echo "href='cartella_clinica.php?id_ricovero=$id_ricovero'"; ?> class='btn btn-success cartella'>
+										<i class="fa fa-heartbeat fa-fw"></i>
 									</a>
+									<?php
+										endif;
+									?>
 									<a title="Esporta PDF" target="_blank" href="esporta_pdf.php" class='btn btn-success download'><i class="fa fa-file-pdf-o fa-fw"></i></a>
 								</div>
 							</div>
@@ -105,7 +98,7 @@
 												if($result!=NULL){
 													echo "<option value=''>--Seleziona--</option>";
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -122,7 +115,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -135,7 +128,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -148,7 +141,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -161,7 +154,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -184,7 +177,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -197,7 +190,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -210,7 +203,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -223,7 +216,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -252,7 +245,7 @@
 												echo "<option value=''>--Seleziona--</option>";
 												if($result!=NULL){
 													while($row = $result->fetch_array()){
-														echo "<option value=''>$row[0]</option>";
+														echo "<option value='$row[0]'>$row[0]</option>";
 													}
 												}
 											?>
@@ -276,7 +269,7 @@
 											echo "<option value=''>--Seleziona--</option>";
 											if($result!=NULL){
 												while($row = $result->fetch_array()){
-													echo "<option value=''>$row[0]</option>";
+													echo "<option value='$row[0]'>$row[0]</option>";
 												}
 											}
 										?>
@@ -289,7 +282,7 @@
 											echo "<option value=''>--Seleziona--</option>";
 											if($result!=NULL){
 												while($row = $result->fetch_array()){
-													echo "<option value=''>$row[0]</option>";
+													echo "<option value='$row[0]'>$row[0]</option>";
 												}
 											}
 										?>
@@ -315,7 +308,7 @@
 				<center>
 					<div class="form-group">
 						<?php 
-							echo "<a href='scheda_ammissione.php' class='btn btn-warning'>Cancel</a>";
+							echo "<a href='nuova_scheda.php' class='btn btn-warning'>Cancel</a>";
 						?>
 						<input name='btn' value="Save" type='submit' class='btn btn-success'>
 					</div>

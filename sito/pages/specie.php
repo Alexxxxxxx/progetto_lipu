@@ -12,7 +12,7 @@
 	$connection = new mysqli($db_path,$db_user,$db_pass,$dblipu);
 
 	if(!$_POST){
-		getHeaderHTML("LIPU Provincia di Livorno","Specie",$dblipu);
+		getHeaderHTML("LIPU","Specie",$dblipu);
 		
 	if(isset($_GET['nome_comune']))
 	{
@@ -113,19 +113,19 @@
 							if(!$_GET){
                     	?>
 						
+						<?php if($_SESSION['is_admin'] == 1) : ?>
 						<form action="specie.php" method="POST" onsubmit="return del();">
 	                        <div align="right">
 	                        	<a title="Deselect All" onClick="toggle(false);" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-unchecked"></i></a>
 	                        	<a title="Select All" onClick="toggle(true);" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-check"></i></a>
 	                        	<!--<input type="checkbox" onClick="toggle(this);" id="all">-->
-								<?php if($_SESSION['is_admin']) : ?>
 	                        	<a title="Add New" href="specie.php?NEW=1" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
 								<button type="submit" value="delete" title="Delete Selected"  name="cmd" class="btn btn-danger btn-circle">
 									<i class="fa fa-times"></i>
                             	</button>
-								<?php endif; ?>
                         	</div>
 						</form>
+						<?php endif; ?>
 						
 						<div class="dataTable_wrapper">
 							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -135,7 +135,7 @@
 										<th>Nome Comune</th>
 										<th>Nome Scientifico</th>
 										<th>Spec</th>
-										<?php if($_SESSION['is_admin']) : ?>
+										<?php if($_SESSION['is_admin'] == 1) : ?>
 										<th>Modifica</th>
 										<?php endif; ?>
 									</tr>
@@ -157,7 +157,7 @@
 											echo "<td>$row[1]</td>";
 											echo "<td>$row[2]</td>";
 											echo "<td>$row[3]</td>";
-											if($_SESSION['is_admin'])
+											if($_SESSION['is_admin'] == 1)
 												echo "<td><a href=\"modifica_specie.php?id=$row[0]\"><img src=\"".$pathImgPg.'edit.png'."\" title=\"Modifica\" align=\"center\" width=\"20\"></a></td>";
 											echo "</tr>";
 											}

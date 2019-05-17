@@ -421,8 +421,8 @@ table.dataTable thead .sorting:after {
 	background: none;
 	width: 150px;
 	height: auto;
-	border: 1px solid #000000;
-	border-right: 0;
+	border: 0;
+	border-bottom: 2px solid #eeeeee;
 	float: left;
 }
 
@@ -438,11 +438,11 @@ table.dataTable thead .sorting:after {
 }
 
 .tab.active{
-	background: #eeeeee;
+	background: none;
 	width: 150px;
 	height: auto;
-	border: 1px solid #000000;
-	border-right: 0;
+	border: 0;
+	border-bottom: 2px solid #000000;
 	float: left;
 }
 
@@ -459,32 +459,4 @@ table.dataTable thead .sorting:after {
 
 .tab-form-active{
 	display: block;
-}
-
-.last{
-	border-right: 1px solid #000000;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-}
-
-.tab.active-last{
-	background: #eeeeee;
-	width: 150px;
-	height: auto;
-	border: 1px solid #000000;
-	float: left;
-}
-
-.first{
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-}
-
-.tab.active-first{
-	background: #eeeeee;
-	width: 150px;
-	height: auto;
-	border: 1px solid #000000;
-	border-right: 0;
-	float: left;
 }

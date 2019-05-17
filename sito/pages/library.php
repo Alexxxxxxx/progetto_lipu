@@ -203,10 +203,16 @@ function getHeaderHTML($title,$subtitle,$dblipu){ ?>
                             <!-- /.nav-second-level -->
                         </li>
 					
+						<?php
+							if($_SESSION['is_admin'] != -1):
+						?>
 						<li>
                             <a href="cartella_clinica.php"><i class="fa fa-heartbeat fa-fw"></i> Cartella Clinica</a>
                         </li>
-  
+						<?php
+							endif;
+						?>
+						
                         <li>
                             <a href="#"><i class="fa fa-database fa-flip-horizontal"></i> Database<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
@@ -228,9 +234,15 @@ function getHeaderHTML($title,$subtitle,$dblipu){ ?>
                                 <li>
                                     <a href="permessiuscita_storico.php">PDF Permessi Uscita (Storico)</a>
                                 </li>
+								<?php
+									if($_SESSION['is_admin'] == 1):
+								?>
 								<li>
                                     <a href="user.php">Operatori</a>
                                 </li>
+								<?php
+									endif;
+								?>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

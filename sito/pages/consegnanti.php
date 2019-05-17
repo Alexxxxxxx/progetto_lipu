@@ -10,7 +10,7 @@
 
 	$connection = new mysqli($db_path,$db_user,$db_pass,$dblipu);
 	if(!$_POST){
-		getHeaderHTML("LIPU Provincia di Livorno","Consegnanti",$dblipu);
+		getHeaderHTML("LIPU","Consegnanti",$dblipu);
 		
 	if(isset($_GET['pf_ente']))
 	{
@@ -105,42 +105,54 @@
 							endif; //$_GET['btn']
 							if(!$_GET){ 
 						?>
-                        <form action="classi.php" method="POST" onsubmit="return del();">
-                          	<div class="dataTable_wrapper">
-	                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-	                                <thead>
-										<tr>
-											<th>Pf Ente</th>
-											<th>Ragione Sociale</th>
-											<?php if($_SESSION['is_admin']) : ?>
-											<th>Modifica</th>
-											<?php endif; ?>
-										</tr>
-									</thead>
-									<tbody>
-									<?php
-										$query = "SELECT * 
-										            FROM consegnante;";
-										$result = querySql($connection,$query);
-										$j = 0;
-										if($result!=NULL)
-											while($row = $result->fetch_array()){
-												$j++;
-												echo "<tr>";
-												echo "<td>$row[1]</td>";
-												echo "<td>$row[2]</td>";
-												if($_SESSION['is_admin'])
-													echo "<td><a href=\"modifica_consegnante.php?id=$row[0]\"><img src=\"".$pathImgPg.'edit.png'."\" title=\"Modifica\" align=\"center\" width=\"20\"></a></td>";
-										?>
-											</tr>
-										<?php
-										}
-										?>
-									</tbody>
-								</table>
-							</div>
+						
+                        <?php if($_SESSION['is_admin'] == 1) : ?>
+						<form action="specie.php" method="POST" onsubmit="return del();">
+	                        <div align="right">
+	                        	<a title="Deselect All" onClick="toggle(false);" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-unchecked"></i></a>
+	                        	<a title="Select All" onClick="toggle(true);" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-check"></i></a>
+	                        	<!--<input type="checkbox" onClick="toggle(this);" id="all">-->
+	                        	<a title="Add New" href="specie.php?NEW=1" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></a>
+								<button type="submit" value="delete" title="Delete Selected"  name="cmd" class="btn btn-danger btn-circle">
+									<i class="fa fa-times"></i>
+                            	</button>
+                        	</div>
 						</form>
-
+						<?php endif; ?>
+						
+						<div class="dataTable_wrapper">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>Pf Ente</th>
+										<th>Ragione Sociale</th>
+										<?php if($_SESSION['is_admin']) : ?>
+										<th>Modifica</th>
+										<?php endif; ?>
+									</tr>
+								</thead>
+								<tbody>
+								<?php
+									$query = "SELECT * 
+												FROM consegnante;";
+									$result = querySql($connection,$query);
+									$j = 0;
+									if($result!=NULL)
+										while($row = $result->fetch_array()){
+											$j++;
+											echo "<tr>";
+											echo "<td>$row[1]</td>";
+											echo "<td>$row[2]</td>";
+											if($_SESSION['is_admin'])
+												echo "<td><a href=\"modifica_consegnante.php?id=$row[0]\"><img src=\"".$pathImgPg.'edit.png'."\" title=\"Modifica\" align=\"center\" width=\"20\"></a></td>";
+									?>
+										</tr>
+									<?php
+									}
+									?>
+								</tbody>
+							</table>
+						</div>
 						<?php
                         if (isset($_GET['classe'])){ 
 						

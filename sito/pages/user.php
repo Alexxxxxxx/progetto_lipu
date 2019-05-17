@@ -3,14 +3,14 @@
 	require_once "settings.php";
 	require_once "library.php";
 
-	if(isset($_SESSION['DB_lipu']) && $_SESSION['is_admin'])
+	if(isset($_SESSION['DB_lipu']) && $_SESSION['is_admin'] == 1)
 		$dblipu = $_SESSION['DB_lipu'];
 	else
 		header("location: login.php");
 
 	$connection = new mysqli($db_path,$db_user,$db_pass,$dblipu);
 	if(!$_POST){
-		getHeaderHTML("ITIS G.Galilei","Operatori",$dblipu);
+		getHeaderHTML("LIPU","Operatori",$dblipu);
 	?>
 
 	<div id="page-wrapper">

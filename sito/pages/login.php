@@ -32,7 +32,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>LIPU Provincia di Livorno - Login</title>
+    <title>LIPU - Login</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
